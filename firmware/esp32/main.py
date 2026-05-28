@@ -15,9 +15,9 @@ SERVO_WAIT_DURATION = 0.5 # seconds
 # NETWORK CONSTANTS
 BROADCAST_MAC = b'\xff\xff\xff\xff\xff\xff'
 AWAIT_MESSAGE_DURATION = 100 # ms
-
+ 
 # CLOWN CONSTANTS
-NUM_CLOWNS = 2
+NUM_CLOWNS = 4
 
 # LIGHT CONSTANTS
 LIGHT_SPACING = 1
@@ -101,26 +101,32 @@ class Clown:
         self.set_arm_down()      # Hide arm away from impact zone
 
     def turn_light_on(self):
-        print(f"Turning light on for Clown {self.id} with color {self.color}")
+        #print(f"Turning light on for Clown {self.id} with color {self.color}")
         set_single_light(self.light_id, self.color)
 
     def turn_light_off(self):
-        print(f"Turning light off for Clown {self.id}")
+        #print(f"Turning light off for Clown {self.id}")
         set_single_light(self.light_id, OFF)
 
     def hit(self, pin):
+        # If we check the pin right now and it's already back to 1 (HIGH),
+        # it was a ghost signal. Ignore it immediately!
+        if pin.value() == 1:
+            #print(f"In Clown {self.id} hit handler but the it's already back to HIGH")
+            return
+        
         if not self.is_down:
             print(f"Clown {self.id} hit!")
             
             self.is_down = True
             self.time_hit = time.ticks_ms()
             self.needs_broadcast = True
-            self.turn_light_off()
+            #self.turn_light_off()
         else:
             print(f"Clown {self.id} hit but is already down!")
     
     def reset(self):
-        print(f"Resetting Clown {self.id}")
+        #print(f"Resetting Clown {self.id}")
         
         self.apply_new_difficulty()
         
@@ -134,6 +140,9 @@ class Clown:
 
     def destroy(self):
         print(f"Destroying Clown {self.id}")
+        
+        # Unbind the hardware interrupt to allow garbage collection
+        self.switch.irq(handler=None)
         
         self.turn_light_off()
         #asyncio.create_task(self.stand_up())
@@ -157,7 +166,7 @@ def create_network_connection():
 
 def push_led_data():
     """Sends the current state of the led_buffer to the physical strip."""
-    print(f"Writing to LED buffer: {led_buffer}")
+    #print(f"Writing to LED buffer: {led_buffer}")
     state = machine.disable_irq() 
     
     # 2. Blast the SPI data uninterrupted
@@ -193,7 +202,7 @@ initialize_lights()
 
 def roll_difficulty(clown_id):
     roll = random.randint(1, 100) # Roll a 100-sided die
-    print(f"Rolled a {roll} for Clown {clown_id}")
+    #print(f"Rolled a {roll} for Clown {clown_id}")
     if clown_id in [0, 1]:  # Clowns 1 and 2
         if roll <= 75:
             return EASY
@@ -258,14 +267,14 @@ while True:
         for clown in clowns:
             if clown.is_down:
                 if clown.needs_broadcast:
-                    connection.send(BROADCAST_MAC, str(clown.points).encode('utf-8'))
+                    connection.send(BROADCAST_MAC, str(clown.id).encode('utf-8') + '-' + str(clown.points).encode('utf-8'))
                     clown.needs_broadcast = False
                 if time.ticks_diff(current_time, clown.time_hit) >= CLOWN_RESET_DURATION:
                     clown.reset()
                     #time.sleep_ms(300)
             else:
                 if time.ticks_diff(current_time, clown.last_roll_time) >= CLOWN_REROLL_DURATION:
-                    print(f"Rerolling Clown {clown.id}")
+                    #print(f"Rerolling Clown {clown.id}")
                     clown.apply_new_difficulty()   
                     clown.turn_light_on()        
                     clown.last_roll_time = current_time
