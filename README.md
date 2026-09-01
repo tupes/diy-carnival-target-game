@@ -142,6 +142,15 @@ The parametric part generators in [`hardware/models/scripts/`](hardware/models/s
 
 [`hardware/models/exports/`](hardware/models/exports/) contains both STEP and 3MF outputs. Multiple cam and hinge-stop variants preserve the physical iteration process: cam reach, horn-pocket clearance, hub geometry, pocket depth, and stop thickness were adjusted as the printed parts met real servos, hinges, targets, and cabinet tolerances.
 
+### From bench prototype to cabinet
+
+Before final installation, the target mechanisms were integrated on a cardboard bench fixture. This made the servo/cam motion, switch inputs, wiring distribution, ESP-NOW scoring, and M5Stack interface visible and accessible while the complete control loop was exercised across multiple stations.
+
+| Bench integration prototype | Cabinet construction |
+| :---: | :---: |
+| [![Multiple wired servo and switch stations arranged around an M5Stack during bench integration](docs/media/down-the-clown-development.jpg)](docs/media/down-the-clown-development.mp4) | ![Full-scale unpainted timber and plywood arcade cabinet during construction](docs/media/down-the-clown-cabinet-construction.jpg) |
+| *Multi-station electromechanical integration before enclosure installation. [Watch the short bench test.](docs/media/down-the-clown-development.mp4)* | *Pre-paint cabinet assembly, showing the full-scale timber frame and plywood enclosure.* |
+
 ## Notable engineering and debugging challenges
 
 ### Rejecting transient hit signals
@@ -164,7 +173,7 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
 
 ```text
 .
-├── docs/media/                  # Hero still, UI still, GIF, and gameplay video
+├── docs/media/                  # Build stills, gameplay GIF, and demonstration videos
 ├── firmware/
 │   ├── esp32/
 │   │   ├── main.py               # Target controller
