@@ -2,6 +2,13 @@
 
 > A custom electromechanical arcade game designed and built from scratch as a gift—from embedded firmware and electronics to parametric CAD, 3D-printed mechanisms, and a full wooden cabinet.
 
+<p align="center">
+  <a href="docs/media/down-the-clown-gameplay.mp4">
+    <img src="docs/media/down-the-clown-hero.jpg" alt="Completed wooden Down the Clown electromechanical arcade game" width="720">
+  </a>
+</p>
+<p align="center"><em>Completed integrated build during a live play session. Select the image to watch the full demonstration.</em></p>
+
 Down the Clown turns a carnival ball toss into a 30-second embedded game. A player taps the M5Stack touchscreen to start, then throws balls at color-coded hinged clown targets. Each hit is detected by an ESP32, scored according to the target's current difficulty, acknowledged with sound and an updated display, and followed by an automatic servo-driven reset.
 
 This project is an end-to-end build: interaction design, game logic, wireless communication, sensor and actuator integration, parametric mechanical design, fabrication, cabinet construction, system debugging, and delivery of a finished physical product.
@@ -14,8 +21,19 @@ This project is an end-to-end build: interaction design, game logic, wireless co
 | Electronics | Integrated active-low hit switches, PWM-controlled servos, clocked addressable RGB lights, and embedded audio |
 | Communication | Split real-time responsibilities across two controllers using routerless ESP-NOW broadcasts |
 | Mechanical design | Created parametric servo cams, brackets, switch mounts, hinge stops, and a cabinet layout in Python |
-| Fabrication | Produced editable STEP models and slicer-ready 3MF files, iterated on fit and geometry, and built the wooden cabinet |
+| Fabrication | Produced vendor-neutral STEP exports and slicer-ready 3MF files, iterated on fit and geometry, and built the wooden cabinet |
 | Integration and delivery | Brought firmware, wiring, printed parts, moving targets, UI, and enclosure together as a playable gift |
+
+## Gameplay demonstration
+
+<p align="center">
+  <img src="docs/media/down-the-clown-gameplay.gif" alt="A ball knocks down a clown target before the servo and cam automatically raise it" width="420">
+</p>
+
+*A successful hit followed by the two-second cooldown and servo/cam reset.*
+
+- [Watch the optimized 39-second gameplay demonstration (MP4)](docs/media/down-the-clown-gameplay.mp4)
+- [View the M5Stack start interface](docs/media/down-the-clown-interface.jpg)
 
 ## System architecture
 
@@ -94,9 +112,9 @@ Key behaviors include:
 
 - **Firmware:** MicroPython, M5Stack UIFlow APIs, ESP-NOW, GPIO interrupts, PWM, and `SoftSPI`
 - **Parametric CAD:** Python, [`build123d`](https://build123d.readthedocs.io/), and `ocp_vscode`
-- **Fabrication exchange:** STEP for editable geometry and 3MF for slicer-ready print projects
+- **Fabrication exchange:** STEP for vendor-neutral geometry exchange and 3MF for slicer-ready print projects
 
-The exact MicroPython/UIFlow builds and CAD environment are not pinned in this repository. The CAD sources also reference a local `align_with` helper, so the files currently serve as inspectable design sources rather than a one-command reproducible build.
+The exact MicroPython/UIFlow builds and CAD environment are not pinned in this repository. The CAD sources also reference a local `align_with` helper, and the M5Stack firmware expects `/flash/res/ding.wav`, which is not included. The files currently serve as inspectable design sources rather than a one-command reproducible build.
 
 ## CAD and fabrication
 
@@ -146,6 +164,7 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
 
 ```text
 .
+├── docs/media/                  # Hero still, UI still, GIF, and gameplay video
 ├── firmware/
 │   ├── esp32/
 │   │   ├── main.py               # Target controller
@@ -157,10 +176,6 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
         ├── scripts/              # Parametric printed-part generators
         └── exports/              # STEP and 3MF design outputs
 ```
-
-## Demonstration media
-
-Gameplay footage is not stored or linked in this checkout yet. Once the source video is available, this section can include a full demonstration link, a lightweight 3–5 second GIF of the hit-and-reset loop, and stills of the finished cabinet and internal mechanism.
 
 ## Project status
 
