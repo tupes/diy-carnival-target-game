@@ -6,6 +6,6 @@ The original cabinet model, parametric part sources, and fabrication exports in 
 
 The preferred source location is:
 
-<https://github.com/tupes/down_the_clown/tree/main/hardware>
+<https://github.com/tupes/diy-carnival-target-game/tree/main/hardware>
 
 This license applies only to original hardware design material in this repository. It does not grant permission to use third-party names, trademarks, artwork, audio, or other intellectual property. The design is an independently engineered, non-commercial fan project inspired by ICE's *Down the Clown* arcade game and is not affiliated with or endorsed by Innovative Concepts in Entertainment, Inc.
