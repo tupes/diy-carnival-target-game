@@ -2,6 +2,8 @@
 
 The game runs as two cooperating MicroPython programs. They target different device APIs and are deployed separately; neither file is intended to run under desktop CPython.
 
+The public M5Stack source uses the neutral title **Carnival Targets**. Historical demonstration media shows the working title that appeared on the one-off gift; the gameplay and controller protocol are otherwise unchanged.
+
 | Controller | Source | Responsibilities |
 | --- | --- | --- |
 | ESP32 | [`esp32/main.py`](esp32/main.py) | Target state, active-low switches, servo PWM, RGB output, difficulty selection, and hit transmission |

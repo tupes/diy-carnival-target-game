@@ -1,4 +1,7 @@
-"""ESP32 target controller for Down the Clown."""
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: MIT
+
+"""ESP32 target controller for the DIY carnival target game."""
 
 import espnow
 import machine

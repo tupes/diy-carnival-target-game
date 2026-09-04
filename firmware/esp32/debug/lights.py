@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: MIT
+
 """Cycle one clocked RGB pixel through the colors used by the game."""
 
 import time

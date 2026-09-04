@@ -1,17 +1,22 @@
-# Down the Clown
+# DIY Electromechanical Carnival Target Game
 
-> A custom electromechanical arcade game designed and built from scratch as a gift—from embedded firmware and electronics to parametric CAD, 3D-printed mechanisms, and a full wooden cabinet.
+> A one-off electromechanical arcade game independently engineered and fabricated as a gift—from embedded firmware and electronics to parametric CAD, 3D-printed mechanisms, and a full wooden cabinet.
 
 <p align="center">
-  <a href="docs/media/down-the-clown-gameplay.mp4">
-    <img src="docs/media/down-the-clown-hero.jpg" alt="Completed wooden Down the Clown electromechanical arcade game" width="720">
+  <a href="docs/media/diy-carnival-target-gameplay.mp4">
+    <img src="docs/media/diy-carnival-target-hero.jpg" alt="Completed wooden DIY electromechanical carnival target game" width="720">
   </a>
 </p>
 <p align="center"><em>Completed integrated build during a live play session. Select the image to watch the full demonstration.</em></p>
 
-Down the Clown turns a carnival ball toss into a 30-second embedded game. A player taps the M5Stack touchscreen to start, then throws balls at color-coded hinged clown targets. Each hit is detected by an ESP32, scored according to the target's current difficulty, acknowledged with sound and an updated display, and followed by an automatic servo-driven reset.
+The game turns a carnival ball toss into a 30-second embedded challenge. A player taps the M5Stack touchscreen to start, then throws balls at color-coded hinged clown targets. Each hit is detected by an ESP32, scored according to the target's current difficulty, acknowledged with sound and an updated display, and followed by an automatic servo-driven reset.
 
 This project is an end-to-end build: interaction design, game logic, wireless communication, sensor and actuator integration, parametric mechanical design, fabrication, cabinet construction, system debugging, and delivery of a finished physical product.
+
+The direct inspiration was [ICE's *Down the Clown* arcade game](https://www.icegame.com/games/down-the-clown/), which I enjoy playing. I recreated the experience as a non-commercial learning project, designing and implementing the firmware, electronics, mechanisms, CAD, fabrication workflow, and cabinet independently.
+
+> [!IMPORTANT]
+> This independent fan project is not affiliated with or endorsed by Innovative Concepts in Entertainment, Inc. No ICE software, artwork, audio, mechanical drawings, or fabrication files are included. Historical media shows the original working title used on the completed gift; that name is referenced here only to identify the inspiration.
 
 ## Engineering scope
 
@@ -27,13 +32,13 @@ This project is an end-to-end build: interaction design, game logic, wireless co
 ## Gameplay demonstration
 
 <p align="center">
-  <img src="docs/media/down-the-clown-gameplay.gif" alt="A ball knocks down a clown target before the servo and cam automatically raise it" width="420">
+  <img src="docs/media/diy-carnival-target-gameplay.gif" alt="A ball knocks down a clown target before the servo and cam automatically raise it" width="420">
 </p>
 
 *A successful hit followed by the two-second cooldown and servo/cam reset.*
 
-- [Watch the optimized 39-second gameplay demonstration (MP4)](docs/media/down-the-clown-gameplay.mp4)
-- [View the M5Stack start interface](docs/media/down-the-clown-interface.jpg)
+- [Watch the optimized 39-second gameplay demonstration (MP4)](docs/media/diy-carnival-target-gameplay.mp4)
+- [View the M5Stack start interface](docs/media/diy-carnival-target-interface.jpg)
 
 ## System architecture
 
@@ -149,8 +154,8 @@ Before final installation, the target mechanisms were integrated on a cardboard 
 
 | Bench integration prototype | Cabinet construction |
 | :---: | :---: |
-| [![Multiple wired servo and switch stations arranged around an M5Stack during bench integration](docs/media/down-the-clown-development.jpg)](docs/media/down-the-clown-development.mp4) | ![Full-scale unpainted timber and plywood arcade cabinet during construction](docs/media/down-the-clown-cabinet-construction.jpg) |
-| *Multi-station electromechanical integration before enclosure installation. [Watch the short bench test.](docs/media/down-the-clown-development.mp4)* | *Pre-paint cabinet assembly, showing the full-scale timber frame and plywood enclosure.* |
+| [![Multiple wired servo and switch stations arranged around an M5Stack during bench integration](docs/media/diy-carnival-target-development.jpg)](docs/media/diy-carnival-target-development.mp4) | ![Full-scale unpainted timber and plywood arcade cabinet during construction](docs/media/diy-carnival-target-cabinet-construction.jpg) |
+| *Multi-station electromechanical integration before enclosure installation. [Watch the short bench test.](docs/media/diy-carnival-target-development.mp4)* | *Pre-paint cabinet assembly, showing the full-scale timber frame and plywood enclosure.* |
 
 ## Notable engineering and debugging challenges
 
@@ -174,7 +179,10 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
 
 ```text
 .
-├── docs/media/                  # Build stills, gameplay GIF, and demonstration videos
+├── LICENSE                      # MIT license for software and repository tooling
+├── docs/media/                  # CC BY 4.0 build stills, GIF, and videos
+│   ├── LICENSE                  # Complete CC BY 4.0 license text
+│   └── NOTICE.md                # Media scope, attribution, and rights notice
 ├── firmware/
 │   ├── README.md                # Deployment, protocol, pin map, and test boundaries
 │   ├── esp32/
@@ -182,6 +190,8 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
 │   │   └── debug/lights.py       # Isolated RGB bench test
 │   └── m5stack/main.py           # Touch UI, timer, score, and audio
 ├── hardware/
+│   ├── LICENSE                  # CERN-OHL-P-2.0 hardware license
+│   ├── NOTICE.md                # Hardware scope, copyright, and source notice
 │   ├── cabinet/arcade_cabinet.py # Parametric cabinet and wiring layout
 │   └── models/
 │       ├── README.md              # CAD environment and export manifest
@@ -205,6 +215,16 @@ python -m compileall -q firmware hardware
 
 The four printable CAD generators are additionally regression-checked against the bounds, volume, and topology of their checked-in canonical STEP files when the CAD dependencies are available. Device behavior, radio timing, switches, lights, audio, and calibrated servo travel still require the physical ESP32/M5Stack test rig.
 
+## Licensing and third-party rights
+
+| Material | License |
+| --- | --- |
+| Firmware and repository tooling | [MIT](LICENSE) |
+| Original hardware design sources and fabrication exports under `hardware/` | [CERN-OHL-P-2.0](hardware/LICENSE) |
+| Original photographs, videos, and derived media listed in `docs/media/NOTICE.md` | [CC BY 4.0](docs/media/LICENSE) |
+
+These licenses cover only original contributions to this repository. They do not grant rights in third-party names, trademarks, artwork, or other intellectual property. Any rights associated with ICE or *Down the Clown* remain with their respective owners.
+
 ## Project status
 
-The game was completed and delivered as a gift. This repository captures the working firmware, cabinet layout, parametric part sources, and fabrication exports; it is a project archive and engineering portfolio, not a commercial kit or step-by-step assembly guide.
+The game was completed and delivered as a gift. This repository captures the independently developed firmware, cabinet layout, parametric part sources, and fabrication exports; it is a non-commercial project archive and engineering portfolio, not a commercial kit or step-by-step assembly guide.

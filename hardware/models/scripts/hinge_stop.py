@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: CERN-OHL-P-2.0
+
 """Generate the calibrated mechanical hinge stop."""
 
 import argparse

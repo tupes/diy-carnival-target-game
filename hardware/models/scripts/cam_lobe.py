@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: CERN-OHL-P-2.0
+
 """Generate the calibrated SG90 cam lobe used to reset a clown target."""
 
 import argparse

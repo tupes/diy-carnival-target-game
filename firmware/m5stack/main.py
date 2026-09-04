@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: MIT
+
 """M5Stack touchscreen, score, timer, and audio controller."""
 
 import _thread
@@ -104,9 +107,9 @@ def draw_start_screen(current_high_score):
     lcd.clear(lcd.BLACK)
     lcd.font(lcd.FONT_DejaVu40)
 
-    # Split the title to prevent wrapping while keeping the large font
-    lcd.print("DOWN THE", 60, 20, lcd.CYAN)
-    lcd.print("CLOWN!", 80, 60, lcd.CYAN)
+    # Split the neutral public-project title to keep the large font readable.
+    lcd.print("CARNIVAL", 60, 20, lcd.CYAN)
+    lcd.print("TARGETS", 80, 60, lcd.CYAN)
 
     # Draw High Score
     lcd.font(lcd.FONT_DejaVu24)

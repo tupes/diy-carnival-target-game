@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mark Tupala
+# SPDX-License-Identifier: CERN-OHL-P-2.0
+
 """Build the visualization-only cabinet and wiring layout.
 
 The recorded dimensions are inch values, while build123d STEP exports are
