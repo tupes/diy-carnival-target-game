@@ -1,2 +1,21 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Keep source and documentation consistent across development platforms.
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.editorconfig text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Generated fabrication and media assets must never receive text conversion.
+*.3mf binary
+*.step binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.mp4 binary

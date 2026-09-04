@@ -1,33 +1,46 @@
+"""Cycle one clocked RGB pixel through the colors used by the game."""
+
+import time
 from machine import Pin, SoftSPI
-spi = SoftSPI(baudrate=100000, polarity=0, phase=0, sck=Pin(13), mosi=Pin(4), miso=Pin(12))
-led_buffer = bytearray(3)
 
-OFF = [0, 0, 0]
-led_buffer[0] = OFF[0]
-led_buffer[1] = OFF[1]
-led_buffer[2] = OFF[2]
-spi.write(led_buffer)
+SPI_CLOCK_PIN = 13
+SPI_DATA_PIN = 4
+SPI_UNUSED_MISO_PIN = 12
+SPI_BAUDRATE = 100_000
+COLOR_DWELL_MS = 1_000
 
-GREEN = [0, 255, 0]
-led_buffer[0] = GREEN[0]
-led_buffer[1] = GREEN[1]
-led_buffer[2] = GREEN[2]
-spi.write(led_buffer)
+OFF = (0, 0, 0)
+TEST_SEQUENCE = (
+    ("green", (0, 255, 0)),
+    ("blue", (0, 0, 255)),
+    ("red", (255, 0, 0)),
+    ("yellow", (255, 255, 0)),
+)
 
-BLUE = [0, 0, 255]
-led_buffer[0] = BLUE[0]
-led_buffer[1] = BLUE[1]
-led_buffer[2] = BLUE[2]
-spi.write(led_buffer)
+spi = SoftSPI(
+    baudrate=SPI_BAUDRATE,
+    polarity=0,
+    phase=0,
+    sck=Pin(SPI_CLOCK_PIN),
+    mosi=Pin(SPI_DATA_PIN),
+    miso=Pin(SPI_UNUSED_MISO_PIN),
+)
+pixel = bytearray(3)
 
-RED = [255, 0, 0]
-led_buffer[0] = RED[0]
-led_buffer[1] = RED[1]
-led_buffer[2] = RED[2]
-spi.write(led_buffer)
 
-YELLOW = [255, 255, 0]
-led_buffer[0] = YELLOW[0]
-led_buffer[1] = YELLOW[1]
-led_buffer[2] = YELLOW[2]
-spi.write(led_buffer)
+def write_color(color):
+    """Write one RGB tuple to the first pixel."""
+    pixel[0] = color[0]
+    pixel[1] = color[1]
+    pixel[2] = color[2]
+    spi.write(pixel)
+
+
+try:
+    write_color(OFF)
+    for name, color in TEST_SEQUENCE:
+        print("Testing", name)
+        write_color(color)
+        time.sleep_ms(COLOR_DWELL_MS)
+finally:
+    write_color(OFF)

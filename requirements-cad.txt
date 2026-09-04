@@ -1,0 +1,2 @@
+# Compatibility baseline for the parametric CAD sources.
+build123d==0.10.0

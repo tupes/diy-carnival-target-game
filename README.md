@@ -113,8 +113,9 @@ Key behaviors include:
 - **Firmware:** MicroPython, M5Stack UIFlow APIs, ESP-NOW, GPIO interrupts, PWM, and `SoftSPI`
 - **Parametric CAD:** Python, [`build123d`](https://build123d.readthedocs.io/), and `ocp_vscode`
 - **Fabrication exchange:** STEP for vendor-neutral geometry exchange and 3MF for slicer-ready print projects
+- **Setup and constraints:** [`firmware/README.md`](firmware/README.md) and [`hardware/models/README.md`](hardware/models/README.md)
 
-The exact MicroPython/UIFlow builds and CAD environment are not pinned in this repository. The CAD sources also reference a local `align_with` helper, and the M5Stack firmware expects `/flash/res/ding.wav`, which is not included. The files currently serve as inspectable design sources rather than a one-command reproducible build.
+The CAD compatibility baseline is pinned in [`requirements-cad.txt`](requirements-cad.txt), and model generators write to repository-relative export paths. The exact MicroPython/UIFlow builds remain unrecorded, and the M5Stack firmware expects `/flash/res/ding.wav`, which is not included. Hardware behavior should therefore be validated on both controllers before deployment.
 
 ## CAD and fabrication
 
@@ -129,7 +130,7 @@ The exact MicroPython/UIFlow builds and CAD environment are not pinned in this r
 - an ESP32 location near the middle row to reduce maximum wire length; and
 - explicit under-shelf cable paths from each mechanism to the controller.
 
-The cabinet script is a spatial integration model: it was used to reason about clearances, sightlines, component placement, and wiring before and during fabrication.
+The cabinet script is a spatial integration model: it was used to reason about clearances, sightlines, component placement, and wiring before and during fabrication. Its numeric values are inches, so it intentionally remains visualization-only rather than emitting a STEP file that downstream tools would interpret as millimetres.
 
 ### Custom printed mechanisms
 
@@ -175,16 +176,34 @@ The enclosure was not treated as a box added at the end. The CAD model includes 
 .
 ├── docs/media/                  # Build stills, gameplay GIF, and demonstration videos
 ├── firmware/
+│   ├── README.md                # Deployment, protocol, pin map, and test boundaries
 │   ├── esp32/
 │   │   ├── main.py               # Target controller
 │   │   └── debug/lights.py       # Isolated RGB bench test
 │   └── m5stack/main.py           # Touch UI, timer, score, and audio
-└── hardware/
-    ├── cabinet/arcade_cabinet.py # Parametric cabinet and wiring layout
-    └── models/
-        ├── scripts/              # Parametric printed-part generators
-        └── exports/              # STEP and 3MF design outputs
+├── hardware/
+│   ├── cabinet/arcade_cabinet.py # Parametric cabinet and wiring layout
+│   └── models/
+│       ├── README.md              # CAD environment and export manifest
+│       ├── scripts/              # Parametric printed-part generators
+│       └── exports/              # STEP and 3MF design outputs
+├── pyproject.toml                # Ruff lint/format configuration
+├── requirements-cad.txt          # Tested build123d compatibility baseline
+└── requirements-dev.txt          # Repository validation tools
 ```
+
+## Local validation
+
+The desktop checks are intentionally static because the firmware depends on physical controllers and legacy device APIs:
+
+```shell
+python -m pip install -r requirements-dev.txt
+ruff check .
+ruff format --check firmware hardware
+python -m compileall -q firmware hardware
+```
+
+The four printable CAD generators are additionally regression-checked against the bounds, volume, and topology of their checked-in canonical STEP files when the CAD dependencies are available. Device behavior, radio timing, switches, lights, audio, and calibrated servo travel still require the physical ESP32/M5Stack test rig.
 
 ## Project status
 

@@ -1,0 +1,2 @@
+# Repository linting and formatting.
+ruff==0.16.5

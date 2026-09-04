@@ -1,0 +1,10 @@
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+"firmware/m5stack/main.py" = ["F403", "F405"]
